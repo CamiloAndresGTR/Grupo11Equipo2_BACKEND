@@ -1,8 +1,8 @@
 const { response } = require("express");
 const { ObjectId } = require("mongoose").Types;
-const { Usuario, Vehiculo, Categoria } = require("../models");
+const { Usuario, Vehiculo, Categoria, Subasta } = require("../models");
 
-const coleccionesPermitidas = ["usuarios", "categorias", "vehiculos", "roles"];
+const coleccionesPermitidas = ["usuarios", "categorias", "vehiculos","subastas", "roles"];
 
 const buscarUsuarios = async (termino = "", res = response) => {
   const esMongoID = ObjectId.isValid(termino); //TRUE
@@ -95,6 +95,37 @@ const buscarVehiculos =  async (termino = "", res = response) => {
     });
   };
 
+  const buscarSubastas = async (termino = "", res = response) => {
+    const esMongoID = ObjectId.isValid(termino); //TRUE
+    if (esMongoID) {
+      const subasta = await Subasta.findById(termino);
+      return res.json({
+        Results: subasta ? [subasta] : [],
+      });
+    }
+    const regexp = new RegExp(termino, "i");
+    
+    const query = {
+      $or: [
+        { identificador: regexp },
+        { descripcion: regexp },
+      ],
+      $and: [{estado:true}]
+    };
+  
+    const [total, subastas] = await Promise.all([
+        (Subasta.countDocuments(query)),
+        (await Subasta.find(query)
+                        .populate('usuario', 'correo')
+                        .populate('categoria', 'nombre')
+                        .populate('vehiculo', 'nombre, precioIni , modeloYear, precioFin')),
+    ]);
+    
+    res.json({
+      total,
+      subastas
+    });
+  };
 
 const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
@@ -114,7 +145,9 @@ const buscar = (req, res = response) => {
     case "vehiculos":
         buscarVehiculos(termino, res);
       break;
-
+      case "subastas":
+        buscarSubastas(termino, res);
+      break;
     default:
       res.status(500).json({
         msg: "Falta implementar busqueda",
