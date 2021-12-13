@@ -12,6 +12,7 @@ class Server {
       auth: "/api/auth",
       categorias: "/api/categorias",
       vehiculos : "/api/vehiculos",
+      subastas : "/api/subastas",
       busqueda: '/api/buscar',
     };
 
@@ -45,6 +46,7 @@ class Server {
     this.app.use(this.paths.usuarios, require("../routes/usuarios"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
     this.app.use(this.paths.vehiculos, require("../routes/vehiculos"));
+    this.app.use(this.paths.subastas, require("../routes/subastas"));
     this.app.use(this.paths.busqueda, require("../routes/busqueda"));
 
   }

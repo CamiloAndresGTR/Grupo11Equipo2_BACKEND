@@ -40,7 +40,7 @@ const crearVehiculo = async (req, res= response) =>{
     const vehiculoDb = await Vehiculo.findOne({nombre});
     if (vehiculoDb) {
         return res.status(400).json({
-            msg: `El producto: ${vehiculoDb.nombre}, ya está registrada en la base de datos`
+            msg: `El vehiculo: ${vehiculoDb.nombre}, ya está registrado en la base de datos`
 
         });
     }
