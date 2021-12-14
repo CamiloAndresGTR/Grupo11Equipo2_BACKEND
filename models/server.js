@@ -13,6 +13,7 @@ class Server {
       categorias: "/api/categorias",
       vehiculos : "/api/vehiculos",
       subastas : "/api/subastas",
+      pujas : "/api/pujas",
       busqueda: '/api/buscar',
     };
 
@@ -47,6 +48,7 @@ class Server {
     this.app.use(this.paths.categorias, require("../routes/categorias"));
     this.app.use(this.paths.vehiculos, require("../routes/vehiculos"));
     this.app.use(this.paths.subastas, require("../routes/subastas"));
+    this.app.use(this.paths.pujas, require("../routes/pujas"));
     this.app.use(this.paths.busqueda, require("../routes/busqueda"));
 
   }

@@ -28,6 +28,10 @@ const VehiculoSchema = Schema({
     type:Number,
     default: 0
 },
+precioAnterior: {
+  type:Number,
+  default: 0
+},
   categoria: {
     type: Schema.Types.ObjectId,
     ref: "Categoria",

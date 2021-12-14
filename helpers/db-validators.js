@@ -1,4 +1,4 @@
-const { Categoria,Role,Usuario,Vehiculo, Subasta } = require("../models");
+const { Categoria,Role,Usuario,Vehiculo, Subasta, Puja } = require("../models");
 
 
 const esRoleValido = async (rol = "") => {
@@ -66,7 +66,21 @@ const usuarioPorIdExiste = async (id = '') => {
       );
     }
 
-  }
+  };
+
+  const existePuja = async (id = '') =>{
+
+    const existeProd = await Puja.findById(id);
+
+    if (!existeProd) {
+      throw new Error(
+        `La puja: ${id}, no está registrada en la base de datos`
+      );
+    }
+
+  };
+
+  
 
 module.exports = {
   esRoleValido,
@@ -75,5 +89,7 @@ module.exports = {
   existeCategoria,
   existeVehiculo,
   nombreUsuarioExiste,
-  existeSubasta
+  existeSubasta,
+  existePuja
+ 
 };
