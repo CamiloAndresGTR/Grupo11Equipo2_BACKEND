@@ -43,7 +43,11 @@ precioAnterior: {
   disponible:{
       type: Boolean,
       default: true
-  }
+  },
+  img:{
+    type: String
+}
+
 });
 
 VehiculoSchema.methods.toJSON = function () {

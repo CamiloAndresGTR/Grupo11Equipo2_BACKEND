@@ -1,4 +1,5 @@
 const { Categoria,Role,Usuario,Vehiculo, Subasta, Puja } = require("../models");
+const { collection } = require("../models/categoria");
 
 
 const esRoleValido = async (rol = "") => {
@@ -80,6 +81,15 @@ const usuarioPorIdExiste = async (id = '') => {
 
   };
 
+  const coleccionesPermitidas = (coleccion='',colecciones =[])=>{
+
+      const incluida = colecciones.includes(coleccion);
+    if (!incluida) {
+      throw new Error('La coleccion no es permitida');
+    }
+    return true;
+  }
+
   
 
 module.exports = {
@@ -90,6 +100,7 @@ module.exports = {
   existeVehiculo,
   nombreUsuarioExiste,
   existeSubasta,
-  existePuja
+  existePuja,
+  coleccionesPermitidas
  
 };
