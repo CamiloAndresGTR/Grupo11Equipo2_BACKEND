@@ -61,6 +61,8 @@ class Server {
     this.app.use(this.paths.subastas, require("../routes/subastas"));
     this.app.use(this.paths.pujas, require("../routes/pujas"));
     this.app.use(this.paths.uploads, require("../routes/uploads"));
+    this.app.use(this.paths.busqueda, require("../routes/busqueda"));
+
 
   }
 
